@@ -1,0 +1,12 @@
+{
+  "build": {
+    "env": {
+      "PYTHON_VERSION": "3.9.20"
+    }
+  },
+  "run": {
+    "env": {
+      "FLASK_ENV": "production"
+    }
+  }
+}

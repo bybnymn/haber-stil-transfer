@@ -1,0 +1,111 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║    🚀 RENDER.COM HIZLI DEPLOY REHBERİ                       ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 GEREKLİ ADIMLAR:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣  GİTLAB HESAP AÇ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 gitlab.com adresine git
+📝 Ücretsiz hesap oluştur (email doğrula)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2️⃣  YENİ PROJE OLUŞTUR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GitLab'da:
+- "New project" tıkla
+- "Create blank project" seç
+- Project name: haber-stil-transfer
+- Visibility: PUBLIC ✓
+- "Create project" tıkla
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3️⃣  TERMİNAL KOMUTLARI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Terminal'de sırayla çalıştır:
+
+cd /Users/fahritas/Desktop/haber-yazici-proje
+
+git init
+git add .
+git commit -m "Production ready"
+
+# GitLab kullanıcı adını yaz:
+git remote add origin https://gitlab.com/KULLANICI_ADIN/haber-stil-transfer.git
+git branch -M main
+git push -u origin main
+
+⚠️  GitLab şifre isterse: Personal Access Token kullan
+    GitLab → Settings → Access Tokens → Oluştur
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4️⃣  RENDER.COM'DA DEPLOY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 render.com adresine git
+📝 Ücretsiz hesap oluştur
+
+Dashboard'da:
+- "New +" → "Web Service"
+- "Connect GitLab"
+- "haber-stil-transfer" repo'sunu seç
+
+AYARLAR:
+
+Name: haber-stil-transfer
+Region: Frankfurt
+Branch: main
+Runtime: Python 3
+
+Build Command:
+pip install -r requirements.txt
+
+Start Command:
+gunicorn app_web:app
+
+Instance Type: Free ✓
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5️⃣  ENVIRONMENT VARIABLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Render Dashboard'da "Environment" sekmesinden ekle:
+
+Key: FLASK_ENV
+Value: production
+
+Key: SECRET_KEY
+Value: [Aşağıdaki komutu çalıştır ve çıktıyı yapıştır]
+
+python3 -c "import secrets; print(secrets.token_hex(32))"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6️⃣  DEPLOY!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"Create Web Service" tıkla
+Deploy 5-10 dakika sürer
+Logs'tan durumu izle
+
+TAMAMLANINCA:
+URL: https://haber-stil-transfer.onrender.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ TEST ET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl https://haber-stil-transfer.onrender.com/health
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║    🎉 BAŞARILAR!                                            ║
+║                                                              ║
+║    Detaylı bilgi için: RENDER_DEPLOY_GUIDE.md              ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝

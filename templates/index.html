@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Haber Stil Transfer Pro</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2d3142;
+            --accent-color: #fca311;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 3rem;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header-title {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(252, 163, 17, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-color), #e09900);
+            border: none;
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(252, 163, 17, 0.4);
+        }
+        
+        .result-section {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .result-title {
+            color: #155724;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .result-text {
+            background: white;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 1rem;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            color: var(--accent-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <!-- Header -->
+            <div class="header-section">
+                <h1 class="header-title">📝 Haber Stil Transfer Pro</h1>
+                <p class="header-subtitle">
+                    Mevcut haber metinlerinizi profesyonel gazete yazım stiline dönüştürün
+                </p>
+            </div>
+            
+            <!-- Features -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h6>Otomatik Dönüştürme</h6>
+                    <small class="text-muted">Metninizi profesyonel stile çevirir</small>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h6>Hızlı İşlem</h6>
+                    <small class="text-muted">Saniyeler içinde sonuç alın</small>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h6>Güvenli</h6>
+                    <small class="text-muted">Metniniz sadece işlem için kullanılır</small>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h6>Web Tabanlı</h6>
+                    <small class="text-muted">Her cihazda çalışır</small>
+                </div>
+            </div>
+            
+            <!-- Input Form -->
+            <div class="form-section">
+                <form id="transformForm">
+                    <div class="mb-3">
+                        <label for="inputText" class="form-label">
+                            <i class="fas fa-edit"></i> Orijinal Haber Metni
+                        </label>
+                        <textarea 
+                            class="form-control" 
+                            id="inputText" 
+                            rows="8"
+                            placeholder="Buraya dönüştürmek istediğiniz haber metnini yazın...
+
+Örnek:
+Bugün İstanbul'da hava çok güzeldi. Çok insan dışarı çıktı. 
+Parklar doluydu. Çocuklar oyun oynuyordu. 
+Kafeler de çok kalabalıktı."
+                            required></textarea>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-magic"></i> Stili Dönüştür
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg ms-2" onclick="clearAll()">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i>
+                <p class="mt-2">Metin dönüştürülüyor, lütfen bekleyin...</p>
+            </div>
+            
+            <!-- Result Section -->
+            <div class="result-section" id="resultSection">
+                <h5 class="result-title">
+                    <i class="fas fa-check-circle"></i> Dönüştürülmüş Profesyonel Haber
+                </h5>
+                
+                <!-- Başlık -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-primary">
+                        <i class="fas fa-newspaper"></i> Haber Başlığı:
+                    </label>
+                    <div class="result-text bg-primary bg-opacity-10 border-primary" id="resultTitle" style="font-weight: bold; font-size: 1.1em;"></div>
+                </div>
+                
+                <!-- İçerik -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-success">
+                        <i class="fas fa-align-left"></i> Haber İçeriği:
+                    </label>
+                    <div class="result-text" id="resultText"></div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button class="btn btn-success" onclick="copyFullResult()">
+                        <i class="fas fa-copy"></i> Tüm Haberi Kopyala
+                    </button>
+                    <button class="btn btn-info ms-2" onclick="downloadResult()">
+                        <i class="fas fa-download"></i> Dosya Olarak İndir
+                    </button>
+                    <button class="btn btn-warning ms-2" onclick="copyTitle()">
+                        <i class="fas fa-heading"></i> Sadece Başlığı Kopyala
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    <i class="fas fa-info-circle"></i> 
+                    Haber Stil Transfer Pro - Metinlerinizi profesyonel gazete diline dönüştürür
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Form submit eventi
+        document.getElementById('transformForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const inputText = document.getElementById('inputText').value.trim();
+            
+            // Validasyon
+            if (!inputText) {
+                showAlert('Lütfen dönüştürülecek metni girin.', 'danger');
+                return;
+            }
+            
+            if (inputText.length < 10) {
+                showAlert('Metin çok kısa. En az 10 karakter girmelisiniz.', 'danger');
+                return;
+            }
+            
+            // Loading göster
+            showLoading(true);
+            hideResult();
+            clearAlerts();
+            
+            try {
+                // API çağrısı
+                const response = await fetch('/transform', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: inputText
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Başarılı sonucu göster
+                    showResult(result.title, result.transformed_text);
+                    showAlert('Haber başarıyla dönüştürüldü!', 'success');
+                } else {
+                    // Hata göster
+                    showAlert(result.error || 'Bilinmeyen hata oluştu.', 'danger');
+                }
+                
+            } catch (error) {
+                console.error('API Hatası:', error);
+                showAlert('Sunucu ile bağlantı kurulamadı. Lütfen tekrar deneyin.', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+        
+        function showResult(title, text) {
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultText').textContent = text;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+        
+        function hideResult() {
+            document.getElementById('resultSection').style.display = 'none';
+        }
+        
+        function showAlert(message, type) {
+            clearAlerts();
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.getElementById('transformForm').appendChild(alertDiv);
+        }
+        
+        function clearAlerts() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => alert.remove());
+        }
+        
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            hideResult();
+            clearAlerts();
+            document.getElementById('inputText').focus();
+        }
+        
+        function copyFullResult() {
+            const title = document.getElementById('resultTitle').textContent;
+            const content = document.getElementById('resultText').textContent;
+            const fullResult = `${title}\n\n${content}`;
+            
+            navigator.clipboard.writeText(fullResult).then(() => {
+                showAlert('Tüm haber panoya kopyalandı!', 'success');
+            }).catch(() => {
+                showAlert('Kopyalama başarısız oldu.', 'danger');
+            });
+        }
+        
+        function copyTitle() {
+            const title = document.getElementById('resultTitle').textContent;
+            navigator.clipboard.writeText(title).then(() => {
+                showAlert('Başlık panoya kopyalandı!', 'success');
+            }).catch(() => {
+                showAlert('Kopyalama başarısız oldu.', 'danger');
+            });
+        }
+        
+        function downloadResult() {
+            const title = document.getElementById('resultTitle').textContent;
+            const content = document.getElementById('resultText').textContent;
+            const fullResult = `${title}\n\n${content}`;
+            
+            const blob = new Blob([fullResult], { type: 'text/plain; charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'donusturulmus_haber.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Sayfa yüklendiğinde input'a focus
+        window.addEventListener('load', function() {
+            document.getElementById('inputText').focus();
+        });
+    </script>
+</body>
+</html>

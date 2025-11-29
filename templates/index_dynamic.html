@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Haber Stil Transfer Pro - Dinamik Öğrenme</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2d3142;
+            --accent-color: #fca311;
+            --success-color: #06d6a0;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin: 20px 0;
+            padding: 30px;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .nav-tabs {
+            border-bottom: 3px solid var(--accent-color);
+            margin-bottom: 30px;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 15px 25px;
+            margin-right: 10px;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: var(--accent-color);
+            color: white;
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(252, 163, 17, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(252, 163, 17, 0.1));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--success-color);
+        }
+        
+        .sample-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: var(--accent-color);
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(102, 126, 234, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 2px dashed var(--success-color);
+        }
+        
+        .alert-custom {
+            border-radius: 10px;
+            border: none;
+            padding: 15px 20px;
+        }
+        
+        .progress-custom {
+            height: 10px;
+            border-radius: 10px;
+            background: rgba(252, 163, 17, 0.2);
+        }
+        
+        .progress-custom .progress-bar {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+                <div class="main-container">
+                    <!-- Header -->
+                    <div class="header-section">
+                        <h1><i class="fas fa-newspaper"></i> Haber Stil Transfer Pro</h1>
+                        <p class="mb-0">🤖 AI Metnini ➡️ 👥 İnsan Yazımına Çevir + 📚 Yeni Örnekler Ekle</p>
+                        <div class="mt-3">
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="fas fa-database"></i> <span id="totalSamples">50+</span> Örnek
+                            </span>
+                            <span class="badge bg-light text-dark">
+                                <i class="fas fa-brain"></i> Dinamik Öğrenme
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Tabs -->
+                    <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="transform-tab" data-bs-toggle="tab" data-bs-target="#transform-panel" type="button" role="tab">
+                                <i class="fas fa-magic"></i> Stil Dönüştür
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="add-sample-tab" data-bs-toggle="tab" data-bs-target="#add-sample-panel" type="button" role="tab">
+                                <i class="fas fa-plus-circle"></i> Örnek Ekle
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="samples-tab" data-bs-toggle="tab" data-bs-target="#samples-panel" type="button" role="tab">
+                                <i class="fas fa-list"></i> Örnekleri Gör
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats-panel" type="button" role="tab">
+                                <i class="fas fa-chart-bar"></i> İstatistikler
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="mainTabsContent">
+                        
+                        <!-- Stil Dönüştürme Paneli -->
+                        <div class="tab-pane fade show active" id="transform-panel" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4><i class="fas fa-robot text-warning"></i> AI Metni Girin</h4>
+                                    <textarea id="inputText" class="form-control" rows="12" 
+                                              placeholder="AI tarafından üretilmiş haberi buraya yapıştırın...&#10;&#10;Örnek:&#10;Bu bağlamda kapsamlı bir değerlendirme gerçekleştirilmiştir. İlgili makamlar tarafından gerekli koordinasyon sağlanmıştır..."></textarea>
+                                    
+                                    <div class="mt-3">
+                                        <button id="transformBtn" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-magic"></i> İnsan Stiline Çevir
+                                        </button>
+                                        <button id="clearBtn" class="btn btn-outline-secondary ms-2">
+                                            <i class="fas fa-eraser"></i> Temizle
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h4><i class="fas fa-user text-success"></i> İnsan Yazımı Sonuç</h4>
+                                    
+                                    <div id="resultBox" class="result-box" style="display:none;">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold"><i class="fas fa-heading"></i> Başlık:</label>
+                                            <div id="resultTitle" class="alert alert-info alert-custom"></div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="form-label fw-bold"><i class="fas fa-align-left"></i> İçerik:</label>
+                                            <div id="resultContent" class="alert alert-success alert-custom"></div>
+                                        </div>
+                                        
+                                        <button id="copyBtn" class="btn btn-outline-primary">
+                                            <i class="fas fa-copy"></i> Kopyala
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="loadingTransform" class="loading">
+                                        <div class="spinner-border text-warning" role="status"></div>
+                                        <p class="mt-2">Stil dönüştürülüyor...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Örnek Ekleme Paneli -->
+                        <div class="tab-pane fade" id="add-sample-panel" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h4><i class="fas fa-plus-circle text-success"></i> Yeni Haber Örneği Ekle</h4>
+                                    <p class="text-muted">Sisteme yeni gerçek haber örnekleri ekleyerek öğrenme kalitesini artırın!</p>
+                                    
+                                    <form id="addSampleForm">
+                                        <div class="mb-3">
+                                            <label for="sampleTitle" class="form-label fw-bold">
+                                                <i class="fas fa-heading"></i> Haber Başlığı
+                                            </label>
+                                            <input type="text" class="form-control" id="sampleTitle" 
+                                                   placeholder="Örnek: Kütahya'da öğrencilerin tasarımı robotlar yarıştı" required>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="sampleContent" class="form-label fw-bold">
+                                                <i class="fas fa-align-left"></i> Haber İçeriği
+                                            </label>
+                                            <textarea class="form-control" id="sampleContent" rows="8" 
+                                                      placeholder="Gerçek haber içeriğini buraya yazın. Ne kadar doğal ve insan yazımı tarzında olursa, sistem o kadar iyi öğrenir..." required></textarea>
+                                            <div class="form-text">
+                                                <span id="charCount">0</span> karakter | Önerilen: 300-1500 karakter
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="sampleSource" class="form-label fw-bold">
+                                                <i class="fas fa-tag"></i> Kaynak (Opsiyonel)
+                                            </label>
+                                            <input type="text" class="form-control" id="sampleSource" 
+                                                   placeholder="Örnek: Yerel gazete, kişisel yazım, vb.">
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-success btn-lg">
+                                            <i class="fas fa-save"></i> Örneği Kaydet ve Sistemi Güncelle
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <div class="stats-card">
+                                        <h5><i class="fas fa-info-circle"></i> Nasıl Çalışır?</h5>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success"></i> Gerçek haber örnekleri ekleyin</li>
+                                            <li><i class="fas fa-check text-success"></i> Sistem otomatik analiz yapar</li>
+                                            <li><i class="fas fa-check text-success"></i> Stil kalıpları güncellenir</li>
+                                            <li><i class="fas fa-check text-success"></i> Dönüşüm kalitesi artar</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="stats-card">
+                                        <h6><i class="fas fa-lightbulb text-warning"></i> İpuçları</h6>
+                                        <small>
+                                            • Kısa, öz haberler tercih edin<br>
+                                            • Gerçek haber dilini kullanın<br>
+                                            • Çeşitli konularda örnekler ekleyin<br>
+                                            • Yerel haber tarzını yansıtın
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="loadingAdd" class="loading">
+                                <div class="spinner-border text-success" role="status"></div>
+                                <p class="mt-2">Örnek kaydediliyor ve sistem güncelleniyor...</p>
+                            </div>
+                        </div>
+
+                        <!-- Örnekleri Göster Paneli -->
+                        <div class="tab-pane fade" id="samples-panel" role="tabpanel">
+                            <h4><i class="fas fa-list"></i> Mevcut Örnekler</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button id="loadSamplesBtn" class="btn btn-outline-primary mb-3">
+                                        <i class="fas fa-refresh"></i> Örnekleri Yükle
+                                    </button>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <select id="sampleFilter" class="form-select d-inline-block w-auto">
+                                        <option value="all">Tüm Örnekler</option>
+                                        <option value="original">Orijinal 50</option>
+                                        <option value="user">Kullanıcı Eklenen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div id="samplesContainer">
+                                <p class="text-muted text-center">Örnekleri yüklemek için butona tıklayın</p>
+                            </div>
+                        </div>
+
+                        <!-- İstatistikler Paneli -->
+                        <div class="tab-pane fade" id="stats-panel" role="tabpanel">
+                            <h4><i class="fas fa-chart-bar"></i> Sistem İstatistikleri</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="stats-card text-center">
+                                        <h3 class="text-primary" id="statTotalSamples">-</h3>
+                                        <p class="mb-0">Toplam Örnek</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stats-card text-center">
+                                        <h3 class="text-success" id="statUserSamples">-</h3>
+                                        <p class="mb-0">Kullanıcı Eklenen</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stats-card text-center">
+                                        <h3 class="text-warning" id="statTotalWords">-</h3>
+                                        <p class="mb-0">Toplam Kelime</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stats-card text-center">
+                                        <h3 class="text-info" id="statAvgWords">-</h3>
+                                        <p class="mb-0">Ort. Kelime/Haber</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button id="loadStatsBtn" class="btn btn-outline-info">
+                                <i class="fas fa-chart-line"></i> İstatistikleri Yükle
+                            </button>
+                            
+                            <div id="detailedStats" class="mt-4" style="display:none;">
+                                <!-- Detaylı istatistikler buraya yüklenecek -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Karakter sayımı
+        document.getElementById('sampleContent').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('charCount').textContent = count;
+        });
+
+        // Stil dönüştürme
+        document.getElementById('transformBtn').addEventListener('click', async function() {
+            const inputText = document.getElementById('inputText').value.trim();
+            
+            if (!inputText) {
+                alert('Lütfen dönüştürülecek metni girin!');
+                return;
+            }
+            
+            if (inputText.length < 10) {
+                alert('Metin çok kısa! En az 10 karakter girin.');
+                return;
+            }
+            
+            document.getElementById('loadingTransform').style.display = 'block';
+            document.getElementById('resultBox').style.display = 'none';
+            
+            try {
+                const response = await fetch('/transform', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: inputText })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('resultTitle').textContent = result.title;
+                    document.getElementById('resultContent').textContent = result.transformed_text;
+                    document.getElementById('resultBox').style.display = 'block';
+                } else {
+                    alert('Hata: ' + result.error);
+                }
+            } catch (error) {
+                alert('Bağlantı hatası: ' + error.message);
+            } finally {
+                document.getElementById('loadingTransform').style.display = 'none';
+            }
+        });
+
+        // Örnek ekleme
+        document.getElementById('addSampleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('sampleTitle').value.trim();
+            const content = document.getElementById('sampleContent').value.trim();
+            const source = document.getElementById('sampleSource').value.trim() || 'user_added';
+            
+            if (!title || !content) {
+                alert('Başlık ve içerik gerekli!');
+                return;
+            }
+            
+            if (content.length < 50) {
+                alert('İçerik çok kısa! En az 50 karakter girin.');
+                return;
+            }
+            
+            document.getElementById('loadingAdd').style.display = 'block';
+            
+            try {
+                const response = await fetch('/add-sample', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        title: title,
+                        content: content,
+                        source: source
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Örnek başarıyla eklendi! Sistem güncellendi.');
+                    document.getElementById('addSampleForm').reset();
+                    document.getElementById('charCount').textContent = '0';
+                    
+                    // İstatistikleri güncelle
+                    document.getElementById('totalSamples').textContent = result.total_samples + '+';
+                } else {
+                    alert('Hata: ' + result.error);
+                }
+            } catch (error) {
+                alert('Bağlantı hatası: ' + error.message);
+            } finally {
+                document.getElementById('loadingAdd').style.display = 'none';
+            }
+        });
+
+        // Temizle butonu
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('resultBox').style.display = 'none';
+        });
+
+        // Kopyala butonu
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const title = document.getElementById('resultTitle').textContent;
+            const content = document.getElementById('resultContent').textContent;
+            const fullText = title + '\n\n' + content;
+            
+            navigator.clipboard.writeText(fullText).then(function() {
+                alert('📋 Metin kopyalandı!');
+            });
+        });
+
+        // Örnekleri yükle
+        document.getElementById('loadSamplesBtn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/get-samples');
+                const result = await response.json();
+                
+                if (result.success) {
+                    displaySamples(result.samples);
+                } else {
+                    alert('Hata: ' + result.error);
+                }
+            } catch (error) {
+                alert('Bağlantı hatası: ' + error.message);
+            }
+        });
+
+        // İstatistikleri yükle
+        document.getElementById('loadStatsBtn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/get-stats');
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateStats(result.stats);
+                } else {
+                    alert('Hata: ' + result.error);
+                }
+            } catch (error) {
+                alert('Bağlantı hatası: ' + error.message);
+            }
+        });
+
+        function displaySamples(samples) {
+            const container = document.getElementById('samplesContainer');
+            container.innerHTML = '';
+            
+            samples.forEach(sample => {
+                const card = document.createElement('div');
+                card.className = 'sample-card';
+                card.innerHTML = `
+                    <h6><i class="fas fa-newspaper"></i> ${sample.title}</h6>
+                    <p class="text-muted small">${sample.content.substring(0, 150)}...</p>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">
+                            <i class="fas fa-tag"></i> ${sample.source} | 
+                            <i class="fas fa-calendar"></i> ${sample.added_date}
+                        </small>
+                        <small class="text-muted">
+                            ${sample.word_count} kelime
+                        </small>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateStats(stats) {
+            document.getElementById('statTotalSamples').textContent = stats.total_samples;
+            document.getElementById('statUserSamples').textContent = stats.user_added_samples;
+            document.getElementById('statTotalWords').textContent = stats.total_words;
+            document.getElementById('statAvgWords').textContent = stats.avg_words;
+        }
+
+        // Sayfa yüklendiğinde temel istatistikleri al
+        window.addEventListener('load', function() {
+            // Temel sayıları yükle
+            fetch('/get-stats')
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        document.getElementById('totalSamples').textContent = result.stats.total_samples + '+';
+                    }
+                })
+                .catch(error => console.log('Stats yükleme hatası:', error));
+        });
+    </script>
+</body>
+</html>
