@@ -39,11 +39,20 @@ def index():
 @app.route('/health')
 def health_check():
     """Health check endpoint for monitoring"""
-    return jsonify({
-        'status': 'healthy',
-        'service': 'Haber Stil Transfer Pro',
-        'version': '1.0.0'
-    })
+    try:
+        stats = db.get_sample_stats()
+        return jsonify({
+            'status': 'healthy',
+            'service': 'Haber Stil Transfer Pro',
+            'version': '1.0.0',
+            'total_samples': stats.get('total_samples', 0)
+        })
+    except:
+        return jsonify({
+            'status': 'healthy',
+            'service': 'Haber Stil Transfer Pro',
+            'version': '1.0.0'
+        })
 
 @app.route('/transform', methods=['POST'])
 def transform_text():
@@ -223,17 +232,7 @@ def force_learn():
             'error': f'Öğrenme sırasında hata oluştu: {str(e)}'
         })
 
-@app.route('/health')
-def health_check():
-    """Sağlık kontrolü"""
-    stats = db.get_sample_stats()
-    return jsonify({
-        'status': 'OK', 
-        'service': 'Haber Stil Transfer Pro - Dinamik Öğrenme',
-        'total_samples': stats['total_samples']
-    })
-
-@app.errorhandler(404)
+@app.route('/get-samples', methods=['GET'])
 def page_not_found(e):
     """404 hata sayfası"""
     return render_template('error.html', 
